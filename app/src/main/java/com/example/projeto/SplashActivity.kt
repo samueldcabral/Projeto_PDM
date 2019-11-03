@@ -7,7 +7,7 @@ import android.os.Handler
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var handler : Handler
-    private var splashTime : Long = 2000
+    private var splashTime : Long = 500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -23,51 +23,62 @@
             android:layout_height="wrap_content"/>
 
         <EditText
-            android:id="@+id/etFormNome"
+            android:id="@+id/etCadastrarNomeConta"
             android:hint="Nome da Conta"
             android:gravity="center"
+            android:layout_marginBottom="20sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <SeekBar
-            android:id="@+id/sbFormGrau"
-            android:min="0"
-            android:max="9999"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/tvFormGrau"
-            android:textSize="80sp"
+        <EditText
+            android:id="@+id/etCadastrarValorConta"
+            android:hint="Valor da Conta"
+            android:inputType="numberDecimal"
+            android:digits="01234567890.,"
             android:gravity="center"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 
+<!--    <LinearLayout-->
+<!--        android:layout_weight="1"-->
+<!--        android:gravity="center"-->
+<!--        android:orientation="vertical"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent">-->
+
+
+        <!--        <SeekBar-->
+<!--            android:id="@+id/sbCadastrarValorConta"-->
+<!--            android:min="0"-->
+<!--            android:max="1000"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"/>-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvCadastrarValorConta"-->
+<!--            android:textSize="80sp"-->
+<!--            android:gravity="center"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"/>-->
+
+<!--    </LinearLayout>-->
+
     <LinearLayout
         android:layout_weight="1"
-        android:gravity="center"
+        android:gravity="center_horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/btFormSalvar"
+            android:id="@+id/btCadastrarSalvar"
             android:text="Salvar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
         <Button
-            android:id="@+id/btFormCancelar"
+            android:id="@+id/btCadastrarCancelar"
             android:text="Cancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>

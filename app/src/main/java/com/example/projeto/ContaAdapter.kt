@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
+import com.example.projeto.model.Mes
+import com.example.projeto.model.Pagamento
 
-class ContaAdapter(var context : Context, var listaContas : ArrayList<String>) : BaseAdapter() {
+class ContaAdapter(var context : Context, var mes : Mes, var listaContas : ArrayList<Pagamento>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var layout : View
-        var conta = this.listaContas.get(position)
+        var mes = this.mes
 
         if(convertView == null) {
             var inflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -21,7 +23,10 @@ class ContaAdapter(var context : Context, var listaContas : ArrayList<String>) :
         }
 
         val tv = layout.findViewById<TextView>(R.id.tvConta)
-        tv.text = conta
+        val tvConta = layout.findViewById<TextView>(R.id.tvContaValor)
+
+        tv.text = this.listaContas.get(position).nome
+        tvConta.text = "R$ ${this.listaContas.get(position).valor}"
 
         return layout
     }

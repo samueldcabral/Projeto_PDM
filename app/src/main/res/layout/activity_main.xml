@@ -11,7 +11,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:text="Dezembro 2019"
+        android:id="@+id/tvMainMes"
         android:textSize="43sp"
         android:padding="32sp"
         android:textColor="#FFF"
