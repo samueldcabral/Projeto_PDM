@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.Switch
 import android.widget.TextView
 import com.example.projeto.model.Mes
 import com.example.projeto.model.Pagamento
 
-class ContaAdapter(var context : Context, var mes : Mes, var listaContas : ArrayList<Pagamento>) : BaseAdapter() {
+class DiarioAdapter(var context : Context, var mes : Mes, var listaContas : ArrayList<Pagamento>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var layout : View
@@ -18,18 +17,17 @@ class ContaAdapter(var context : Context, var mes : Mes, var listaContas : Array
 
         if(convertView == null) {
             var inflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            layout = inflater.inflate(R.layout.conta_layout, null)
+            layout = inflater.inflate(R.layout.diario_layout, null)
         }else {
             layout = convertView
         }
 
-        val tv = layout.findViewById<TextView>(R.id.tvConta)
-        val tvConta = layout.findViewById<TextView>(R.id.tvContaValor)
-        val swConta = layout.findViewById<Switch>(R.id.swConta)
-        val pagamento = this.listaContas.get(position)
+        val tv = layout.findViewById<TextView>(R.id.tvDiarioConta)
+        val tvConta = layout.findViewById<TextView>(R.id.tvDiarioValor)
+
+        var pagamento = this.listaContas.get(this.listaContas.size - 1 - position)
         tv.text = pagamento.nome
         tvConta.text = "R$ ${pagamento.valor}"
-        swConta.isChecked = pagamento.status
 
         return layout
     }

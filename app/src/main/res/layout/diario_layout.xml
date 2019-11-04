@@ -13,7 +13,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tvConta"
+            android:id="@+id/tvDiarioConta"
             android:textSize="26sp"
             android:padding="10dp"
             android:text="Aluguel"
@@ -23,35 +23,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-        <Switch
-            android:id="@+id/swConta"
-            android:focusable="false"
-            android:layout_alignParentRight="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_centerVertical="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="start">
-
         <TextView
-            android:id="@+id/tvContaValor"
-            android:text="500"
-            android:textSize="14sp"
-            android:layout_marginLeft="30sp"
-            android:layout_marginStart="30sp"
-            android:layout_alignParentLeft="true"
+            android:id="@+id/tvDiarioValor"
+            android:textSize="26sp"
+            android:padding="10dp"
+            android:text="Aluguel"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_alignParentRight="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
-
-
     </RelativeLayout>
+
+
 
 </LinearLayout>

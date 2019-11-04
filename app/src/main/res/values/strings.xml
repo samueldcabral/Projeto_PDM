@@ -24,4 +24,8 @@
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
     <string name="title_activity_main2">MainActivity2</string>
+
+    <string name="tab_text_1">Configs</string>
+    <string name="tab_text_2">Mes</string>
+    <string name="tab_text_3">Diário</string>
 </resources>

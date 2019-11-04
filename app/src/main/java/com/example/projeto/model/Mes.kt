@@ -24,6 +24,14 @@ class Mes : Serializable {
         this.pagamentos.add(pagamento)
     }
 
+    fun removePagamento(pagamento : Pagamento) {
+        this.pagamentos.remove(pagamento)
+    }
+
+    fun removePagamento(index : Int) {
+        this.pagamentos.removeAt(index)
+    }
+
     override fun toString(): String {
         return "${nome} - ${ano}"
     }

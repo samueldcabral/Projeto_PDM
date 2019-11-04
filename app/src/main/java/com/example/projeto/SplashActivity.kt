@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     fun goToMainActivity() {
-        val it = Intent(this, FloatingActivity::class.java)
+        val it = Intent(this, MainActivity::class.java)
 //        val it = Intent(this, MainActivity::class.java)
         startActivity(it)
         finish()

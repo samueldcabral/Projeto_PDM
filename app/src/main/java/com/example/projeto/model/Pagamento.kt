@@ -9,9 +9,9 @@ class Pagamento : Serializable {
     var tipo : String
     var status : Boolean = false
     var valor : Double
-    lateinit var diaDePagamento : String
+    var diaDePagamento : String = ""
     lateinit var dataDePagamento : Date
-    lateinit var obs : String
+    var obs : String = ""
     var categorias : ArrayList<String> = ArrayList<String>()
 
     constructor(nome : String, tipo : String, valor : Double) {
