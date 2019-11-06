@@ -9,9 +9,10 @@
     tools:context=".SplashActivity">
 
     <ImageView
-        android:layout_width="357dp"
-        android:layout_height="170dp"
-        android:background="@drawable/financr" />
+        android:id="@+id/ivSplashLogo"
+        android:layout_width="307dp"
+        android:layout_height="200dp"
+        android:background="@drawable/smw_logo" />
 
 
 </LinearLayout>

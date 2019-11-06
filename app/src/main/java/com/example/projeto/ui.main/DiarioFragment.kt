@@ -23,7 +23,7 @@ import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.dialog_diario.view.*
 import kotlinx.android.synthetic.main.dialog_mes.view.*
 
-class DiarioFragment : Fragment() {
+class DiarioFragment : BaseFragment() {
     private var FORM_CADASTRAR = 1
     private val TIPO_PAGAMENTO = "Diário"
     private lateinit var listaContas : ListView

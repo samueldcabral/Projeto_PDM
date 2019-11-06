@@ -1,7 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#7978f0</color>
+    <color name="colorPrimaryDark">#6564ed</color>
+    <color name="colorAccent">#FF5154</color>
+    <color name="white">#FFF</color>
+
+    <!--1C77C3
+    6665DD
+    9B9ECE
+    8C2155
+    DC758F
+
+    18E6FF
+    AF7595
+
+    azul
+    6665DD
+
+    vermelho
+    FF5154
+
     <color name="colorPrimary">#4ddd8e</color>
     <color name="colorPrimaryDark">#3eaf71</color>
     <color name="colorAccent">#3eaf71</color>
     <color name="white">#FFF</color>
+    -->
 </resources>
