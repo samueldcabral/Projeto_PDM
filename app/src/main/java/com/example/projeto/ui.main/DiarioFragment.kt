@@ -70,6 +70,7 @@ class DiarioFragment : BaseFragment() {
                     )
                 }
             }
+
         }
 
         this.listaContas.setOnItemLongClickListener(OnLongClickLista())

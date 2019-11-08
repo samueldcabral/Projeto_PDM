@@ -81,7 +81,7 @@ class AppMainFragment : BaseFragment() {
                         )
                     }
                 } else {
-//                    insereUsuarioEMes() // Fins de testes apenas - TODO: deletar esta linha
+                    insereUsuarioEMes() // Caso o banco nao tenha sido iniciado, insere um usuario e mes padrao
                 }
             }
         }
@@ -251,6 +251,15 @@ class AppMainFragment : BaseFragment() {
 
     }
 
+    suspend fun insereUsuarioEMes() {
+        val userDb : User = User("Samuel")
+        val insertedUser = repository.insertUser(userDb)
+        ID_USUARIO_PADRAO = insertedUser.toInt()
+
+        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
+        val insertedMes = repository.insertMes(mesDb)
+    }
+
     suspend fun debugarBanco() {
 
         var users : List<User> = repository.getAllUsers()
@@ -304,15 +313,6 @@ class AppMainFragment : BaseFragment() {
 
     }
 
-    suspend fun insereUsuarioEMes() {
-        val userDb : User = User("Samuel")
-        val insertedUser = repository.insertUser(userDb)
-        ID_USUARIO_PADRAO = insertedUser.toInt()
-
-        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
-        val insertedMes = repository.insertMes(mesDb)
-    }
-
     suspend fun cadastraDadosBanco() {
 
         val userDb : User = User("Samuel")
@@ -333,7 +333,6 @@ class AppMainFragment : BaseFragment() {
         repository.insertPagamentos(pagamentoDbThree)
         repository.insertPagamentos(pagamentoDbFour)
     }
-
 
 }
 
