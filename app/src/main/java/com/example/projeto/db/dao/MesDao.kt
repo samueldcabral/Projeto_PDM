@@ -37,5 +37,4 @@ interface MesDao {
     @Delete
     suspend fun deleteMes(mes : Mes) : Int
 
-
 }

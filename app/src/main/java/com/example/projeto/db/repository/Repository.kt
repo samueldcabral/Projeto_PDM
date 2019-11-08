@@ -20,10 +20,6 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         return userDao.findUserByName(nome)
     }
 
-    suspend fun findUserById(id : Int) : User {
-        return userDao.findUserById(id)
-    }
-
     suspend fun getAllMeses() : List<Mes> {
         return mesDao.getAllMeses()
     }
@@ -41,24 +37,12 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         return mesDao.findMesesByUser(userId)
     }
 
-    suspend fun findMesByName(nome : String) : Mes {
-        return mesDao.findMesByName(nome)
-    }
-
     suspend fun findMesById(id : Int) : Mes {
         return mesDao.findMesById(id)
     }
 
     suspend fun getAllPagamentos() : List<Pagamento> {
         return pagamentoDao.getAllPagamentos()
-    }
-
-    suspend fun getAllPagamentosMensais() : List<Pagamento> {
-        return pagamentoDao.getAllPagamentosMensais()
-    }
-
-    suspend fun findPagamentosByMes(mesId : Int) : List<Pagamento> {
-        return pagamentoDao.findPagamentosByMes(mesId)
     }
 
     suspend fun findPagamentosMensaisByMes(id: Int): List<Pagamento>  {
@@ -74,13 +58,8 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         return pagamentoDao.findSomaPagamentosDiariosByMes(mesDefault, tipoPagamento)
     }
 
-
-        suspend fun findPagamentoById(id : Int) : Pagamento {
+    suspend fun findPagamentoById(id : Int) : Pagamento {
         return pagamentoDao.findPagamentoById(id)
-    }
-
-    suspend fun findPagamentoByName(nome : String) : Pagamento {
-        return pagamentoDao.findPagamentoByName(nome)
     }
 
     /////////////////////////////////////////////////////////////////////////////////
@@ -99,7 +78,6 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         var mes : Mes = getLastMes()
         var novoMes = getNextMes(mes)
         novoMes.id = insertMes(novoMes).toInt()
-
         return novoMes
     }
 
@@ -111,7 +89,6 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
             var novoPag = Pagamento(pag.nome, pag.tipo, false, pag.valor, null, null, null, id)
             insertPagamentos(novoPag)
         }
-
     }
 
     suspend fun insertPagamentos(pagamento : Pagamento) : Long {
@@ -128,7 +105,6 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
     suspend fun insertMesOnPagamento(pagamento : Int, mes : Int) {
         var pagamento = findPagamentoById(pagamento)
         pagamento.mes = mes
-
         updatePagamentos(pagamento)
     }
 
@@ -201,8 +177,5 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         }
         return nome
     }
-
-
-
 
 }

@@ -15,16 +15,17 @@ import java.util.*
 )
 @TypeConverters(Converters::class)
 class Pagamento (
-    var nome : String,
-    var tipo : String,
-    var status : Boolean = false,
-    var valor : Double,
-    var diaDePagamento : String?,
-    var dataPagamento : Date?,
-    var obs : String?,
-    @ColumnInfo(name = "mes_id")
-    var mes : Int?
-) : Serializable {
+                var nome : String,
+                var tipo : String,
+                var status : Boolean = false,
+                var valor : Double,
+                var diaDePagamento : String?,
+                var dataPagamento : Date?,
+                var obs : String?,
+                @ColumnInfo(name = "mes_id")
+                var mes : Int?
+                                                ) : Serializable {
+
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
 }

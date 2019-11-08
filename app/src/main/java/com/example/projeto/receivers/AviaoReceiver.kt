@@ -1,4 +1,4 @@
-package com.example.projeto
+package com.example.projeto.receivers
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,8 +6,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.ContextCompat.startActivity
+import com.example.projeto.FunActivity
+import com.example.projeto.R
+import com.example.projeto.helpers.toast
 
 class AviaoReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
@@ -18,7 +20,9 @@ class AviaoReceiver : BroadcastReceiver() {
         var ivAviao : ImageView = layout.findViewById(R.id.ivFunFunAviao)
         var ivPanda = layout.findViewById<ImageView>(R.id.ivFunFunPanda)
 
-        val anim_aviao = AnimationUtils.loadAnimation(context, R.anim.anim_aviao)
+        val anim_aviao = AnimationUtils.loadAnimation(context,
+            R.anim.anim_aviao
+        )
         val anim1 = AnimationUtils.loadAnimation(context, R.anim.anim1)
 
 

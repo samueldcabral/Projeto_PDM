@@ -1,4 +1,4 @@
-package com.example.projeto
+package com.example.projeto.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,12 +8,11 @@ import android.widget.BaseAdapter
 import android.widget.CompoundButton
 import android.widget.Switch
 import android.widget.TextView
+import com.example.projeto.R
 import com.example.projeto.db.database.AppDatabase
-import com.example.projeto.db.entities.Mes
 import com.example.projeto.db.entities.Pagamento
 import com.example.projeto.db.repository.Repository
 import kotlinx.coroutines.*
-import java.text.DecimalFormat
 import kotlin.coroutines.CoroutineContext
 
 
@@ -54,8 +53,6 @@ class ContaAdapter(var context : Context, var listaContas : List<Pagamento>) : B
 
         override fun onCheckedChanged(buttonView: CompoundButton?, isChecked: Boolean) {
             if(isChecked) {
-//                context?.toast("checked the ${pagamento.id} - ${pagamento.nome} - ${pagamento.status}")
-
                 launch {
                     context?.let {
                         val operation = async {
@@ -71,16 +68,11 @@ class ContaAdapter(var context : Context, var listaContas : List<Pagamento>) : B
                         repository.updatePagamentos(pag2)
                         }
                         operation.await()
-//                        context?.toast("Updated?")
                     }
                 }
 
-            }else{
-//                context?.toast("unchecked")
-
             }
         }
-
     }
 
     override fun getItem(position: Int): Any {
@@ -98,8 +90,6 @@ class ContaAdapter(var context : Context, var listaContas : List<Pagamento>) : B
     fun update() {
         notifyDataSetChanged()
     }
-
-
 }
 
 private fun Double.format(digits: Int): String {

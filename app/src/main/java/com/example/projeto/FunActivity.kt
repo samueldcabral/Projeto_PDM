@@ -9,7 +9,7 @@ import android.widget.ImageView
 
 class FunActivity : AppCompatActivity() {
     private lateinit var handler : Handler
-    private var splashTime : Long = 7700
+    private var splashTime : Long = 6000
     private lateinit var ivAviao : ImageView
     private lateinit var ivPanda : ImageView
 
@@ -18,12 +18,10 @@ class FunActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fun)
 
-        val anim1 = AnimationUtils.loadAnimation(this, R.anim.anim_aviao)
-        val anim2 = AnimationUtils.loadAnimation(this, R.anim.anim_panda)
-
-
         this.ivAviao = findViewById(R.id.ivFunFunAviao)
         this.ivPanda = findViewById(R.id.ivFunFunPanda)
+        val anim1 = AnimationUtils.loadAnimation(this, R.anim.anim_aviao)
+        val anim2 = AnimationUtils.loadAnimation(this, R.anim.anim_panda)
 
         this.ivAviao.startAnimation(anim1)
         this.ivPanda.startAnimation(anim2)

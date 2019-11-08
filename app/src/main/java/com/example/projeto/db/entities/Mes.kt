@@ -15,11 +15,12 @@ import java.io.Serializable
     ))
 )
 class Mes (
-    var num_mes : Int,
-    var ano : Int,
-    @ColumnInfo(name = "user_id")
-    var user : Int?
-) : Serializable {
+                var num_mes : Int,
+                var ano : Int,
+                @ColumnInfo(name = "user_id")
+                var user : Int?
+                                             ) : Serializable {
+
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
     var nome : String = ""

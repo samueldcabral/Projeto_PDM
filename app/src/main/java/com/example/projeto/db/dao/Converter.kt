@@ -1,5 +1,6 @@
 package com.example.projeto.db.dao
 
+import android.annotation.TargetApi
 import android.icu.util.Calendar
 import androidx.room.TypeConverter
 import java.util.*
@@ -20,6 +21,7 @@ object Converters {
 
     @TypeConverter
     @JvmStatic
+    @TargetApi(24)
     fun toCalendar(l : Long) : Calendar? {
         var c : Calendar = Calendar.getInstance()
         c.setTimeInMillis(l)

@@ -2,20 +2,16 @@ package com.example.projeto
 
 import android.annotation.TargetApi
 import android.app.*
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ListView
 import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.viewpager.widget.ViewPager
+import com.example.projeto.receivers.AviaoReceiver
 import com.example.projeto.ui.main.SectionsPagerAdapter
 import com.google.android.material.tabs.TabLayout
 

@@ -2,33 +2,25 @@ package com.example.projeto.ui.main
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.fragment.app.Fragment
 import com.example.projeto.*
-//import com.example.projeto.FloatingActivity
+import com.example.projeto.adapters.ContaAdapter
 import com.example.projeto.db.database.AppDatabase
 import com.example.projeto.db.entities.Mes
 import com.example.projeto.db.entities.Pagamento
 import com.example.projeto.db.entities.User
 import com.example.projeto.db.repository.Repository
+import com.example.projeto.helpers.log
+import com.example.projeto.helpers.toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.dialog_escolha_mes.view.*
-import kotlinx.android.synthetic.main.dialog_mes.*
 import kotlinx.android.synthetic.main.dialog_mes.view.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AppMainFragment : BaseFragment() {
@@ -44,7 +36,6 @@ class AppMainFragment : BaseFragment() {
     private lateinit var listaContas : ListView
     private lateinit var pagamentos : ArrayList<Pagamento>
     private lateinit var meses : ArrayList<Mes>
-//    private lateinit var user : User
     private lateinit var tvMes : TextView
     private lateinit var repository : Repository
 
@@ -57,47 +48,24 @@ class AppMainFragment : BaseFragment() {
         var layout = inflater.inflate(R.layout.activity_floating, container, false)
         val fab: FloatingActionButton = layout.findViewById(R.id.fab)
 
-        fab.setOnClickListener { view ->
-            this.showNotification()
-            context?.log("What the actual fuck")
-            this.goToCadastrarConta()
-
-        }
-
         this.listaContas = layout.findViewById(R.id.lvMainContas)
         this.tvMes = layout.findViewById(R.id.tvMainMes)
-        //DB stuff
 
+        fab.setOnClickListener { view ->
+            this.goToCadastrarConta()
+        }
+
+        //DB stuff
         launch {
             context?.let {
+                //Instanciar o repositorio
                 repository = Repository(AppDatabase.getDatabase(context!!).UserDao(),AppDatabase.getDatabase(context!!).MesDao(), AppDatabase.getDatabase(context!!).PagamentoDao())
 
-                // SELECT * FROM user pag mes
-
-//                var users : List<User> = repository.getAllUsers()
-//                var meses : List<Mes> = repository.getAllMeses()
-//                var pagamentos : List<Pagamento> = repository.getAllPagamentos()
-//////
-//////
-//                for(user in users) {
-//                    Log.i("APP_PROJETO", "Repository: the users are id: ${user.id} - ${user.nome}")
-//                }
-//////////
-//                for(mes in meses) {
-//                    Log.i("APP_PROJETO", "Repository: the meses are id: ${mes.id} - num_mes: ${mes.num_mes} nome: ${mes.nome} ano: ${mes.ano} user: ${mes.user}")
-//                }
-//////
-//                for(pag in pagamentos) {
-//                    Log.i("APP_PROJETO", "Repository: the pagamentos are id: ${pag.id} - nome: ${pag.nome} dataPagamento: ${pag.dataPagamento} mes: ${pag.mes}")
-//                }
-//
-//                Log.i("APP_PROJETO","CACETAAAAAAAAAAAAAAAAAAAA")
-//                 END SELECT
+//                debugarBanco() // Fins de testes apenas - TODO: deletar esta linha
+//                cadastraDadosBanco() // Fins de testes apenas - TODO: deletar esta linha
+//                eliminaDadosBanco() // Fins de testes apenas - TODO: deletar esta linha
 
 
-
-//                cadastraContas()
-//                elimina()
                 var users : List<User> = repository.getAllUsers()
                 if(users.size > 0) {
                     mesAtual = repository.getLastMes()
@@ -105,16 +73,18 @@ class AppMainFragment : BaseFragment() {
                     var user : User = repository.findUserByName("Samuel")
                     meses = repository.findMesesByUser(user.id) as ArrayList<Mes>
                     tvMes.text = "${mesAtual.nome} ${mesAtual.ano}"
-                    listaContas.adapter = getContext()?.let { ContaAdapter(it, pagamentos) }
+
+                    listaContas.adapter = getContext()?.let {
+                        ContaAdapter(
+                            it,
+                            pagamentos
+                        )
+                    }
                 } else {
-                    insereUsuarioEMes()
+//                    insereUsuarioEMes() // Fins de testes apenas - TODO: deletar esta linha
                 }
-
-
-
             }
-        } //launch
-
+        }
 
         tvMes.setOnClickListener(escolhaMes())
 
@@ -124,168 +94,12 @@ class AppMainFragment : BaseFragment() {
         return layout
     }
 
-
-    inner class escolhaMes : View.OnClickListener {
-        override fun onClick(v: View?) {
-            launch {
-                var user : User = repository.findUserByName("Samuel")
-                var mesesNovos = repository.findMesesByUser(user.id) as ArrayList<Mes>
-                val it = Intent(context, EscolheMesActivity::class.java)
-                it.putExtra("MESES", mesesNovos)
-                startActivityForResult(it, FORM_ESCOLHE)
-            }
-
-
-            /*
-            val mDialogView = LayoutInflater.from(context).inflate(R.layout.dialog_escolha_mes, null)
-
-
-            mDialogView.lvDialogEscolhaLista.adapter = getContext()?.let{
-                EscolhaAdapter(it, meses)
-            }
-
-            mDialogView.lvDialogEscolhaLista.setOnItemClickListener(OnEscolhaClick())
-
-            val mDialogBuilder = AlertDialog.Builder(context)
-            mDialogBuilder.setTitle("Escolha o mes")
-            mDialogBuilder.setView(mDialogView)
-            mDialogBuilder.create()
-
-            var mAlertDialog = mDialogBuilder.show()
-
-            mDialogView.btDialogEscolhaAdicionar.setOnClickListener{
-                mAlertDialog.dismiss()
-                launch {
-                    var operation = async {
-                        var novoMes = repository.insertNovoMes()
-                        meses.add(novoMes)
-                    }
-                   operation.await()
-                    (mDialogView.lvDialogEscolhaLista.adapter as EscolhaAdapter).notifyDataSetChanged()
-                }
-            }
-        }
-        */
-            /*
-        inner class OnEscolhaClick : AdapterView.OnItemClickListener {
-            override fun onItemClick(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-
-                launch {
-                    context?.let {
-                        var mes = repository.findMesById(meses.get(position).id)
-                        context?.log("mesatual ${mes.num_mes} ${mes.nome} ${mes.id}")
-
-                        this@AppMainFragment.mesAtual = mes
-                        this@AppMainFragment.pagamentos.clear()
-//                        this@AppMainFragment.pagamentos = repository.findPagamentosByMes(mesAtual.id) as ArrayList<Pagamento>
-                        this@AppMainFragment.pagamentos = arrayListOf(Pagamento("teste", "um", false, 4.4, null,null,null,null))
-                        context?.log("pagamentos ${pagamentos.get(0).nome}")
-                        this@AppMainFragment.atualizaLista3()
-                    }
-
-                }
-
-            }
-
-        }
-        */
-        }
-    }
-
-    suspend fun elimina() {
-        pagamentos = repository.getAllPagamentos() as ArrayList<Pagamento>
-
-        for(i in pagamentos) {
-            if(i.mes ==5) {
-                repository.deletePagamentos(i)
-
-            }else if(i.mes == 6) {
-                repository.deletePagamentos(i)
-            }
-
-        }
-
-        meses = repository.getAllMeses() as ArrayList<Mes>
-        for(i in meses) {
-            if(i.ano > 2019){
-                repository.deleteMes(i)
-
-            }
-
-        }
-
-//        var user = repository.getAllUsers()
-//        for(i in user) {
-//            repository.deleteUser(i)
-//        }
-
-    }
-
-    suspend fun insereUsuarioEMes() {
-        val userDb : User = User("Samuel")
-        val insertedUser = repository.insertUser(userDb)
-        ID_USUARIO_PADRAO = insertedUser.toInt()
-
-        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
-        val insertedMes = repository.insertMes(mesDb)
-    }
-
-    suspend fun cadastraContas() {
-
-        val userDb : User = User("Samuel")
-        val insertedUser = repository.insertUser(userDb)
-
-
-//        val mesDb : Mes = Mes(12, 2019, ID_USUARIO_PADRAO)
-        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
-        val insertedMes = repository.insertMes(mesDb)
-
-        val pagamentoDbOne : Pagamento = Pagamento("Aluguel", TIPO_PAGAMENTO, false, 500.00, null, Date(), null, insertedMes.toInt())
-        val pagamentoDbTwo : Pagamento = Pagamento("Agua", TIPO_PAGAMENTO, false, 50.00, null, Date(), null, insertedMes.toInt())
-        val pagamentoDbThree : Pagamento = Pagamento("Energia", TIPO_PAGAMENTO, false, 100.00, null, null, null, insertedMes.toInt())
-        val pagamentoDbFour : Pagamento = Pagamento("Internet", TIPO_PAGAMENTO, false, 80.00, null, null, null, insertedMes.toInt())
-
-
-        repository.insertPagamentos(pagamentoDbOne)
-        repository.insertPagamentos(pagamentoDbTwo)
-        repository.insertPagamentos(pagamentoDbThree)
-        repository.insertPagamentos(pagamentoDbFour)
-    }
-
     fun goToCadastrarConta() {
         val it = Intent(context, CadastrarActivity::class.java)
         startActivityForResult(it, FORM_CADASTRAR)
     }
 
-    fun showNotification(){
-        var builder = NotificationCompat.Builder(context!!, CHANNEL_ID)
-            .setSmallIcon(R.drawable.smw_icon)
-            .setContentTitle("It works")
-            .setContentText("Oh my god")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-
-        with(NotificationManagerCompat.from(context!!)) {
-            // notificationId is a unique int for each notification that you must define
-            notify(notificationId, builder.build())
-        }
-
-
-    }
-
     fun atualizaLista() {
-        (this.listaContas.adapter as ContaAdapter).update()
-    }
-
-    fun atualizaLista2() {
-        listaContas.adapter = getContext()?.let { ContaAdapter(it, listOf(Pagamento("Sam 1", "1", false, 1.0, null, null, null, null))) }
-    }
-
-    suspend fun atualizaLista3() {
         (this.listaContas.adapter as ContaAdapter).update()
     }
 
@@ -320,6 +134,22 @@ class AppMainFragment : BaseFragment() {
                     operation.await()
 
                 }
+            }
+        }
+    }
+
+    private fun Double.format(digits: Int): String {
+        return "%.${digits}f".format(this)
+    }
+
+    inner class escolhaMes : View.OnClickListener {
+        override fun onClick(v: View?) {
+            launch {
+                var user : User = repository.findUserByName("Samuel")
+                var mesesNovos = repository.findMesesByUser(user.id) as ArrayList<Mes>
+                val it = Intent(context, EscolheMesActivity::class.java)
+                it.putExtra("MESES", mesesNovos)
+                startActivityForResult(it, FORM_ESCOLHE)
             }
         }
     }
@@ -404,10 +234,8 @@ class AppMainFragment : BaseFragment() {
             position: Int,
             id: Long
         ): Boolean {
-//            context?.toast("Long pressed")
             var pagamento : Pagamento = pagamentos.get(position)
 
-//            this@AppMainFragment.mesAtual.removePagamento(position)
             launch {
                 val operation = async {
                     this@AppMainFragment.repository.deletePagamentos(pagamento)
@@ -422,5 +250,90 @@ class AppMainFragment : BaseFragment() {
         }
 
     }
+
+    suspend fun debugarBanco() {
+
+        var users : List<User> = repository.getAllUsers()
+        var meses : List<Mes> = repository.getAllMeses()
+        var pagamentos : List<Pagamento> = repository.getAllPagamentos()
+
+        for(user in users) {
+            context?.log("User: Id - ${user.id} / ${user.nome}")
+        }
+
+        for(mes in meses) {
+            context?.log("Mes: Id - ${mes.id} / ${mes.num_mes} / ${mes.nome} / ${mes.ano} / user: ${mes.user}")
+        }
+
+        for(pag in pagamentos) {
+            context?.log("Pagamento: Id - ${pag.id} / ${pag.nome} / ${pag.dataPagamento} / mes: ${pag.mes}")
+        }
+    }
+
+    suspend fun eliminaDadosBanco() {
+        pagamentos = repository.getAllPagamentos() as ArrayList<Pagamento>
+
+//        for(i in pagamentos) {
+//            if(i.mes == 5) {
+//                repository.deletePagamentos(i)
+//
+//            }else if(i.mes == 6) {
+//                repository.deletePagamentos(i)
+//            }else if(i.mes == 7){
+//                repository.deletePagamentos(i)
+//            }else if(i.mes == 8){
+//                repository.deletePagamentos(i)
+//
+//            }
+//
+//        }
+
+        meses = repository.getAllMeses() as ArrayList<Mes>
+        for(i in meses) {
+            if(i.ano > 2019){
+                repository.deleteMes(i)
+
+            }
+
+        }
+
+//        var user = repository.getAllUsers()
+//        for(i in user) {
+//            repository.deleteUser(i)
+//        }
+
+    }
+
+    suspend fun insereUsuarioEMes() {
+        val userDb : User = User("Samuel")
+        val insertedUser = repository.insertUser(userDb)
+        ID_USUARIO_PADRAO = insertedUser.toInt()
+
+        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
+        val insertedMes = repository.insertMes(mesDb)
+    }
+
+    suspend fun cadastraDadosBanco() {
+
+        val userDb : User = User("Samuel")
+        val insertedUser = repository.insertUser(userDb)
+
+//        val mesDb : Mes = Mes(12, 2019, ID_USUARIO_PADRAO)
+        val mesDb : Mes = Mes(12, 2019, insertedUser.toInt())
+        val insertedMes = repository.insertMes(mesDb)
+
+        val pagamentoDbOne : Pagamento = Pagamento("Aluguel", TIPO_PAGAMENTO, false, 500.00, null, Date(), null, insertedMes.toInt())
+        val pagamentoDbTwo : Pagamento = Pagamento("Agua", TIPO_PAGAMENTO, false, 50.00, null, Date(), null, insertedMes.toInt())
+        val pagamentoDbThree : Pagamento = Pagamento("Energia", TIPO_PAGAMENTO, false, 100.00, null, null, null, insertedMes.toInt())
+        val pagamentoDbFour : Pagamento = Pagamento("Internet", TIPO_PAGAMENTO, false, 80.00, null, null, null, insertedMes.toInt())
+
+
+        repository.insertPagamentos(pagamentoDbOne)
+        repository.insertPagamentos(pagamentoDbTwo)
+        repository.insertPagamentos(pagamentoDbThree)
+        repository.insertPagamentos(pagamentoDbFour)
+    }
+
+
 }
 

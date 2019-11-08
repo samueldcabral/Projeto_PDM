@@ -10,8 +10,9 @@ import java.io.Serializable
     tableName = "user_table"
 )
 class User (
-    var nome : String
-) : Serializable {
+            var nome : String
+                                ) : Serializable {
+
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
 }

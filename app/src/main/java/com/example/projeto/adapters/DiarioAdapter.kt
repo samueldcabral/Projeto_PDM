@@ -1,4 +1,4 @@
-package com.example.projeto
+package com.example.projeto.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.projeto.db.entities.Mes
+import com.example.projeto.R
 import com.example.projeto.db.entities.Pagamento
 
 
@@ -44,11 +44,11 @@ class DiarioAdapter(var context : Context, var listaContas : List<Pagamento>) : 
         return this.listaContas.count()
     }
 
-    private fun Double.format(digits: Int): String {
-        return "%.${digits}f".format(this)
-    }
-
     fun update() {
         notifyDataSetChanged()
+    }
+
+    private fun Double.format(digits: Int): String {
+        return "%.${digits}f".format(this)
     }
 }

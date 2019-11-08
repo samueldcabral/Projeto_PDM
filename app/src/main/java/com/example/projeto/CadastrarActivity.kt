@@ -34,18 +34,13 @@ class CadastrarActivity : AppCompatActivity() {
 
         this.btSalvar.setOnClickListener(ClickSalvar(it = btSalvar))
         this.btCancelar.setOnClickListener({ finish() })
-
-    }
-
-    fun mudarIntercionalizacao(valor : String) : String {
-        return valor.replace(',', '.')
     }
 
     inner class ClickSalvar(it: View) : View.OnClickListener {
         override fun onClick(v: View?) {
             val nomePagamento : String = this@CadastrarActivity.etNomeConta.text.toString()
             var valorPagamento : String = this@CadastrarActivity.etValorConta.text.toString()
-            valorPagamento = this@CadastrarActivity.mudarIntercionalizacao(valorPagamento)
+            valorPagamento = valorPagamento.replace(',', '.')
             val tipoPagamento = "Mensal"
 
             val pagamento : Pagamento = Pagamento(nomePagamento, tipoPagamento, false, valorPagamento.toDouble(), null, null, null, null)
