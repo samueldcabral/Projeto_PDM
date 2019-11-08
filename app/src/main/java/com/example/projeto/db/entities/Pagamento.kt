@@ -2,6 +2,7 @@ package com.example.projeto.db.entities
 
 import androidx.room.*
 import com.example.projeto.db.dao.Converters
+import java.io.Serializable
 import java.util.*
 
 @Entity(
@@ -23,7 +24,7 @@ class Pagamento (
     var obs : String?,
     @ColumnInfo(name = "mes_id")
     var mes : Int?
-){
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
 }

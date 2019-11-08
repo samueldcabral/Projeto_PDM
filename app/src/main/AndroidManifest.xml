@@ -4,13 +4,16 @@
     package="com.example.projeto">
 
     <application
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/swm_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/swm_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CadastrarActivity"></activity>
+        <activity android:name=".FunActivity"></activity>
+        <activity android:name=".EscolheMesActivity" />
+        <activity android:name=".CadastrarActivity" />
+        <activity android:name=".NotificationActivity" />
         <activity
             android:name=".FloatingActivity"
             android:label="@string/title_activity_main2"

@@ -11,7 +11,7 @@ import com.example.projeto.db.entities.Mes
 import com.example.projeto.db.entities.Pagamento
 import com.example.projeto.db.entities.User
 
-@Database(entities = arrayOf(Mes::class, Pagamento::class, User::class), version = 2)
+@Database(entities = arrayOf(Mes::class, Pagamento::class, User::class), version = 3)
 abstract class AppDatabase : RoomDatabase(){
 
     abstract fun UserDao() : UserDao

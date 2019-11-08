@@ -7,7 +7,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.example.projeto.R
 
 private val TAB_TITLES = arrayOf(
-    R.string.tab_text_1,
     R.string.tab_text_2,
     R.string.tab_text_3
 )
@@ -26,13 +25,10 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
         when(position) {
             0 -> {
-                return ConfigFragment()
+                return AppMainFragment()
 //                return PlaceholderFragment.newInstance(position + 1)
             }
             1 -> {
-                return AppMainFragment()
-            }
-            2 -> {
                 return DiarioFragment()
             }
             else -> return AppMainFragment()
@@ -45,6 +41,6 @@ class SectionsPagerAdapter(private val context: Context, fm: FragmentManager) :
 
     override fun getCount(): Int {
         // Show 2 total pages.
-        return 3
+        return 2
     }
 }

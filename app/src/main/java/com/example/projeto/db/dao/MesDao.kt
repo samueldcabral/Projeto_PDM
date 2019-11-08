@@ -19,6 +19,12 @@ interface MesDao {
     @Query("SELECT * FROM mes_table WHERE id = :id")
     suspend fun findMesById(id : Int) : Mes
 
+    @Query("SELECT * FROM mes_table ORDER BY id DESC LIMIT 1")
+    suspend fun getLastMes(): Mes
+
+    @Query("SELECT * FROM mes_table ORDER BY id DESC LIMIT 2")
+    suspend fun getSecondToLastMes(): List<Mes>
+
     //Insert
     @Insert
     suspend fun insertMes(mes : Mes) : Long
@@ -30,4 +36,6 @@ interface MesDao {
     //Delete
     @Delete
     suspend fun deleteMes(mes : Mes) : Int
+
+
 }

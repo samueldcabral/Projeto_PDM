@@ -5,6 +5,10 @@
     <color name="colorAccent">#FF5154</color>
     <color name="white">#FFF</color>
 
+    <color name="colorPrimaryDarker">#43429b</color>
+    <color name="colorPrimaryDarkDarker">#1c1c5a</color>
+    <color name="colorAccentDarker">#c26c69</color>
+
     <!--1C77C3
     6665DD
     9B9ECE

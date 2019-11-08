@@ -1,5 +1,6 @@
 package com.example.projeto.db.repository
 
+import android.util.Log
 import com.example.projeto.db.dao.MesDao
 import com.example.projeto.db.dao.PagamentoDao
 import com.example.projeto.db.dao.UserDao
@@ -27,6 +28,15 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         return mesDao.getAllMeses()
     }
 
+    suspend fun getLastMes() : Mes {
+        return mesDao.getLastMes()
+    }
+
+    suspend fun getSecondToLastMes() : Mes {
+        var meses = mesDao.getSecondToLastMes()
+        return meses.get(1)
+    }
+
     suspend fun findMesesByUser(userId : Int) : List<Mes> {
         return mesDao.findMesesByUser(userId)
     }
@@ -43,11 +53,29 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
         return pagamentoDao.getAllPagamentos()
     }
 
+    suspend fun getAllPagamentosMensais() : List<Pagamento> {
+        return pagamentoDao.getAllPagamentosMensais()
+    }
+
     suspend fun findPagamentosByMes(mesId : Int) : List<Pagamento> {
         return pagamentoDao.findPagamentosByMes(mesId)
     }
 
-    suspend fun findPagamentoById(id : Int) : Pagamento {
+    suspend fun findPagamentosMensaisByMes(id: Int): List<Pagamento>  {
+        var tipo = "Mensal"
+        return pagamentoDao.findPagamentosMensaisByMes(id, tipo)
+    }
+
+    suspend fun findPagamentosDiariosByMes(mesDefault: Int, tipo : String): List<Pagamento> {
+        return pagamentoDao.findPagamentosDiariosByMes(mesDefault, tipo)
+    }
+
+    suspend fun findSomaPagamentosDiariosByMes(mesDefault: Int, tipoPagamento: String): Double {
+        return pagamentoDao.findSomaPagamentosDiariosByMes(mesDefault, tipoPagamento)
+    }
+
+
+        suspend fun findPagamentoById(id : Int) : Pagamento {
         return pagamentoDao.findPagamentoById(id)
     }
 
@@ -62,7 +90,28 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
     }
 
     suspend fun insertMes(mes : Mes) : Long {
+        var nome  = getMesNome(mes.num_mes)
+        mes.nome = nome
         return mesDao.insertMes(mes)
+    }
+
+    suspend fun insertNovoMes() : Mes {
+        var mes : Mes = getLastMes()
+        var novoMes = getNextMes(mes)
+        novoMes.id = insertMes(novoMes).toInt()
+
+        return novoMes
+    }
+
+    suspend fun insertMesOnPagamentosMensais(id: Int) {
+        var mes = getSecondToLastMes()
+        var pagamentos = findPagamentosMensaisByMes(mes.id)
+
+        for(pag in pagamentos) {
+            var novoPag = Pagamento(pag.nome, pag.tipo, false, pag.valor, null, null, null, id)
+            insertPagamentos(novoPag)
+        }
+
     }
 
     suspend fun insertPagamentos(pagamento : Pagamento) : Long {
@@ -112,5 +161,48 @@ class Repository (private val userDao: UserDao, private val mesDao : MesDao, pri
     suspend fun deletePagamentos(pagamento : Pagamento) {
         return pagamentoDao.deletePagamentos(pagamento)
     }
+
+    //Helper
+
+    private fun getNextMes(mes : Mes) : Mes {
+        var mes_num = mes.num_mes
+        var mes_ano = mes.ano
+
+        mes_num++
+
+        if(mes_num > 12) {
+            mes_num = 1
+            mes_ano++
+        }
+
+        mes.id++
+        mes.nome = getMesNome(mes_num)
+        mes.num_mes = mes_num
+        mes.ano = mes_ano
+
+        return mes
+    }
+
+    private fun getMesNome(num : Int) : String {
+        val nome = when(num){
+            1 -> "Janeiro"
+            2 -> "Fevereiro"
+            3 -> "Março"
+            4 -> "Abril"
+            5 -> "Maio"
+            6 -> "Junho"
+            7 -> "Julho"
+            8 -> "Agosto"
+            9 -> "Setembro"
+            10 -> "Outubro"
+            11 -> "Novembro"
+            12 -> "Dezembro"
+            else -> "Invalido"
+        }
+        return nome
+    }
+
+
+
 
 }

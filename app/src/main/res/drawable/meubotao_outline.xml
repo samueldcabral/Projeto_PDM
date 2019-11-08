@@ -3,8 +3,7 @@
     android:layout_height="40sp"
     android:layout_width="230sp">
 
-    <solid android:color="#FFF"/>
-    <stroke android:color="@color/colorPrimary" android:width="5sp"/>
+    <solid android:color="@color/colorAccent"/>
     <corners android:radius="30dp"/>
 
 </shape>

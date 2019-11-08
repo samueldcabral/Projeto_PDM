@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/tvDiarioConta"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:padding="10dp"
             android:text="Aluguel"
             android:layout_marginLeft="20dp"
@@ -25,7 +25,7 @@
 
         <TextView
             android:id="@+id/tvDiarioValor"
-            android:textSize="26sp"
+            android:textSize="18sp"
             android:padding="10dp"
             android:text="Aluguel"
             android:layout_marginLeft="20dp"

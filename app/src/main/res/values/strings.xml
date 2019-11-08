@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Projeto</string>
+    <string name="app_name">Save My Wallet!</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -25,7 +25,9 @@
     <string name="menu_send">Send</string>
     <string name="title_activity_main2">MainActivity2</string>
 
-    <string name="tab_text_1">Configs</string>
+    <string name="tab_text_1">Fun Fun Fun</string>
     <string name="tab_text_2">Mes</string>
     <string name="tab_text_3">Diário</string>
+
+    <string name="reply_label">Digite um gasto</string>
 </resources>

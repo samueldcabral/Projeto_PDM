@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.example.projeto.model.Mes
-import com.example.projeto.model.Pagamento
+import com.example.projeto.db.entities.Mes
+import com.example.projeto.db.entities.Pagamento
 
-class DiarioAdapter(var context : Context, var mes : Mes, var listaContas : ArrayList<Pagamento>) : BaseAdapter() {
+
+class DiarioAdapter(var context : Context, var listaContas : List<Pagamento>) : BaseAdapter() {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var layout : View
-        var mes = this.mes
 
         if(convertView == null) {
             var inflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -27,7 +27,7 @@ class DiarioAdapter(var context : Context, var mes : Mes, var listaContas : Arra
 
         var pagamento = this.listaContas.get(this.listaContas.size - 1 - position)
         tv.text = pagamento.nome
-        tvConta.text = "R$ ${pagamento.valor}"
+        tvConta.text = "R$ ${pagamento.valor.format(2)}"
 
         return layout
     }
@@ -42,6 +42,10 @@ class DiarioAdapter(var context : Context, var mes : Mes, var listaContas : Arra
 
     override fun getCount(): Int {
         return this.listaContas.count()
+    }
+
+    private fun Double.format(digits: Int): String {
+        return "%.${digits}f".format(this)
     }
 
     fun update() {

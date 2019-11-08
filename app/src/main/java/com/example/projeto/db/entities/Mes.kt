@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
-import com.example.projeto.model.Pagamento
+import java.io.Serializable
 
 @Entity(
     tableName = "mes_table",
@@ -15,11 +15,12 @@ import com.example.projeto.model.Pagamento
     ))
 )
 class Mes (
-    var nome : String,
-    var ano : String,
+    var num_mes : Int,
+    var ano : Int,
     @ColumnInfo(name = "user_id")
     var user : Int?
-){
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
     var id : Int = 0
+    var nome : String = ""
 }
